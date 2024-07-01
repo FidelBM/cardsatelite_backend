@@ -12,7 +12,7 @@ export class User{
     @Column({type: 'date'})
     date_of_birth: Date
 
-    @Column({type: 'date'})
+    @Column({type: 'date', nullable: true})
     date_of_baptism: Date
 
     @Column()
