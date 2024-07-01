@@ -30,6 +30,12 @@ export class User{
     @Column()
     precursorado: string
 
+    @Column()
+    grupo: number
+
+    @Column()
+    sg: string
+
     @Column({nullable: true, default: () => 'CURRENT_TIMESTAMP'})
     createdAt: Date
 

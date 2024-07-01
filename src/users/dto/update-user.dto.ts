@@ -8,5 +8,7 @@ export class UpdateUserDto{
     publicador?: boolean
     genero?: string
     precursorado?: string
+    grupo?: number
     updatedAt: Date
+    sg: string
 }

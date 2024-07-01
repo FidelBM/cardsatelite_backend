@@ -8,11 +8,11 @@ import { CardsModule } from './cards/cards.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: 'mysql',
       host: 'viaduct.proxy.rlwy.net',
-      port: 59365,
-      username: 'postgres',
-      password: 'HPUINtrWVmRUNkudiCxhuaNcOUjyUxhe',
+      port: 35076,
+      username: 'root',
+      password: 'GpawPFcMZIikyBNuaMFkjiBtTEvkdfUT',
       database: 'railway',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

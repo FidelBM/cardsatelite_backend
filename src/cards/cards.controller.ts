@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Put, Param, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Post, Get, Put, Param, ParseIntPipe, Delete } from '@nestjs/common';
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/card.dto';
 import { UpdateCardDto } from './dto/card-update.dto';
@@ -26,6 +26,12 @@ export class CardsController {
     updateUser( @Param('id', ParseIntPipe) id : number , @Body() user : UpdateCardDto){
 
         return this.cardsService.updateUser(id, user)
+
+    }
+    @Delete(':id')
+    deletUser( @Param('id', ParseIntPipe) id : number){
+
+        return this.cardsService.deleteCard(id)
 
     }
 

@@ -49,7 +49,20 @@ export class CardsService {
         return this.cardRepository.save(updateUser)
 
     }
-    p
+    
+    async deleteCard( id : number ){
+
+        const result = await this.cardRepository.delete({ id });
+
+        if(result.affected === 0){
+                
+                return new HttpException('User not found', HttpStatus.NOT_FOUND)
+
+        }
+
+        return result
+
+    }
 
 
 }

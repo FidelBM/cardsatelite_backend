@@ -7,4 +7,6 @@ export class CreateUserDto{
     siervo_ministerial: boolean
     genero: string
     precursorado?: string
+    grupo: number
+    sg: string
 }
