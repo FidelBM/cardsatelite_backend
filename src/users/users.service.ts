@@ -7,92 +7,69 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+  ) {}
 
-    constructor( @InjectRepository(User) private userRepository : Repository<User> ) {    }
+  getAllUsers() {
+    return this.userRepository.find({});
+  }
 
-    getAllUsers(){
+  async createUser(user: CreateUserDto) {
+    const userFound = await this.userRepository.findOne({
+      where: {
+        fullName: user.fullName,
+      },
+    });
 
-        return this.userRepository.find({
-        })
-
+    if (userFound) {
+      return new HttpException('Correo ya registrado', HttpStatus.CONFLICT);
     }
 
-    async createUser(user: CreateUserDto){
+    const newUser = this.userRepository.create(user);
 
-        const userFound = await this.userRepository.findOne({
+    return this.userRepository.save(newUser);
+  }
 
-            where: {
+  async getUser(id: number) {
+    const userFound = await this.userRepository.findOne({
+      where: {
+        id,
+      },
+    });
 
-                fullName: user.fullName
-
-            }
-
-        })
-
-        if(userFound){
-
-            return new HttpException('Correo ya registrado', HttpStatus.CONFLICT)
-
-        }
-
-        const newUser = this.userRepository.create(user)
-
-        return this.userRepository.save(newUser)
-
+    if (!userFound) {
+      return new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    async getUser( id : number ){
+    return userFound;
+  }
 
-        const userFound = await this.userRepository.findOne({
-            where: {
-                id
-            }
-        });
+  async deleteUser(id: number) {
+    const result = await this.userRepository.delete({ id });
 
-        if(!userFound){
-
-            return new HttpException('User not found', HttpStatus.NOT_FOUND)
-
-        }
-
-        return userFound
-
+    if (result.affected === 0) {
+      return new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    async deleteUser( id : number ){
+    return result;
+  }
 
-        const result = await this.userRepository.delete({ id });
+  async updateUser(id: number, user: UpdateUserDto) {
+    const userFound = await this.userRepository.findOne({
+      where: {
+        id,
+      },
+    });
 
-        if(result.affected === 0){
-                
-                return new HttpException('User not found', HttpStatus.NOT_FOUND)
-
-        }
-
-        return result
-
+    if (!userFound) {
+      return new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    async updateUser(id: number, user: UpdateUserDto) {
+    user.updatedAt = new Date();
 
-        const userFound = await this.userRepository.findOne({
-            where:{
-                id
-            }
-        })
+    const updateUser = Object.assign(userFound, user);
 
-        if(!userFound){
-
-            return new HttpException('User not found', HttpStatus.NOT_FOUND)
-        }
-
-        user.updatedAt = new Date();
-
-        const updateUser = Object.assign(userFound, user);
-
-        return this.userRepository.save(updateUser)
-
-    }
-
-
+    return this.userRepository.save(updateUser);
+  }
 }
