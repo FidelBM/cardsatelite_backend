@@ -1,33 +1,38 @@
-import { User } from "src/users/user.entity"
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm"
+import { User } from 'src/users/user.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 
-@Entity({ name:'card' })
-export class Card{
-    @PrimaryGeneratedColumn()
-    id: number
+@Entity({ name: 'card' })
+export class Card {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({nullable: true})
-    horas: number
+  @Column({ nullable: true })
+  horas: number;
 
-    @Column({nullable: true})
-    comentarios: string
+  @Column({ nullable: true })
+  comentarios: string;
 
-    @Column({nullable: true})
-    cursos: number
+  @Column({ nullable: true })
+  cursos: number;
 
-    @Column()
-    predico: boolean
+  @Column()
+  predico: boolean;
 
-    @Column()
-    auxiliar: boolean
+  @Column()
+  auxiliar: boolean;
 
-    @Column({nullable: true, default: () => 'CURRENT_TIMESTAMP'})
-    createdAt: Date
+  @Column({ nullable: true, default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
-    @Column()
-    userId: number
+  @Column()
+  userId: number;
 
-    @ManyToOne(() => User, user => user.cards)
-    user: User
-
+  @ManyToOne(() => User, (user) => user.cards)
+  user: User;
 }

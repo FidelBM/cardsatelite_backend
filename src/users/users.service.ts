@@ -12,7 +12,11 @@ export class UsersService {
   ) {}
 
   getAllUsers() {
-    return this.userRepository.find({});
+    return this.userRepository.find({
+      where: {
+        isActive: true,
+      },
+    });
   }
 
   async createUser(user: CreateUserDto) {
@@ -46,13 +50,15 @@ export class UsersService {
   }
 
   async deleteUser(id: number) {
-    const result = await this.userRepository.delete({ id });
+    const userFound = await this.userRepository.findOne({ where: { id } });
 
-    if (result.affected === 0) {
+    if (!userFound) {
       return new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    return result;
+    userFound.isActive = false;
+
+    return this.userRepository.save(userFound);
   }
 
   async updateUser(id: number, user: UpdateUserDto) {

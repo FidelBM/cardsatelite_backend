@@ -7,6 +7,8 @@ import { CardsModule } from './cards/cards.module';
 import { envs } from './config/envs';
 import { CartFormModule } from './cart-form/cart-form.module';
 import { PrinterModule } from './printer/printer.module';
+import { MailModule } from './mail/mail.module';
+import { LimitTimeModule } from './limit-time/limit-time.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { PrinterModule } from './printer/printer.module';
     CardsModule,
     CartFormModule,
     PrinterModule,
+    MailModule,
+    LimitTimeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
