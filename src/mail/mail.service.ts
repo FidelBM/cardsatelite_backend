@@ -22,7 +22,6 @@ export class WeeklyReportService {
 
   @Cron('0 0 15 * *')
   async sendMonthlySummary(): Promise<void> {
-    // Fecha actual y determinación del mes actual
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth(); // 0 = enero, 11 = diciembre
