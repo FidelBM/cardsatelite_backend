@@ -25,7 +25,7 @@ export class CartFormController {
       // Configura los encabezados para la respuesta
       response.set({
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename=congregacion-satelite.pdf`,
+        'Content-Disposition': `attachment; filename=congregacion-satelite-${year}-${year + 1}.pdf`,
         'Content-Length': pdfBuffer.length,
       });
 
@@ -53,7 +53,35 @@ export class CartFormController {
       // Configura los encabezados para la respuesta
       response.set({
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename=precursores.pdf`,
+        'Content-Disposition': `attachment; filename=precursores-${year}-${year + 1}.pdf`,
+        'Content-Length': pdfBuffer.length,
+      });
+
+      // Envía el PDF como una respuesta
+      response.end(pdfBuffer);
+      // Redirige a la página principal
+      response.redirect('http://localhost:3000/dashboard/tables');
+    } catch (error) {
+      // Maneja los errores de manera apropiada
+      console.error('Error generando el PDF:', error);
+      response.status(500).send('Error generando el PDF');
+    }
+  }
+
+  @Get('combined/publicador/:year')
+  async getFullPublicador(
+    @Res() response: Response,
+    @Param('year', ParseIntPipe) year: number,
+  ) {
+    try {
+      // Llama a generateReportsForAllUsers que debe devolver una promesa con el buffer PDF
+      const pdfBuffer =
+        await this.cartFormService.generateReportsForPublicadores(year);
+
+      // Configura los encabezados para la respuesta
+      response.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename=publicadores-${year}-${year + 1}.pdf`,
         'Content-Length': pdfBuffer.length,
       });
 

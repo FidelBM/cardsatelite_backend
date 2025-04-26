@@ -4,6 +4,7 @@ interface ReportOptions {
   name: string;
   birthDate: string;
   baptismDate: string;
+  year: number;
   roles: {
     elder: boolean;
     ministerialServant: boolean;
@@ -290,7 +291,8 @@ export const getHeader = (options: ReportOptions): TDocumentDefinitions => {
             // Encabezado de la tabla
             [
               {
-                text: 'Año de servicio 2023-2024',
+                text:
+                  'Año de servicio ' + options.year + '-' + (options.year + 1),
                 bold: true,
                 alignment: 'center',
                 fontSize: 11,
