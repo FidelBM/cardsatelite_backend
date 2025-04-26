@@ -26,7 +26,6 @@ export class WeeklyReportService {
     const year = now.getFullYear();
     const month = now.getMonth(); // 0 = enero, 11 = diciembre
 
-    // Definimos el inicio y fin del mes actual
     const startOfMonth = new Date(year, month, 1, 0, 0, 0);
     const endOfMonth = new Date(year, month + 1, 0, 23, 59, 59);
 
